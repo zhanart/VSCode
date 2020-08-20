@@ -1,0 +1,122 @@
+{
+	"name": "startanyshell",
+	"displayName": "Start any shell",
+	"description": "Start any shell from VS Code, configurable from user settings.",
+	"version": "0.3.1",
+	"publisher": "remcoros",
+	"author": {
+		"name": "Remco Ros",
+		"email": "remcoros@live.nl",
+		"url": "https://github.com/remcoros"
+	},
+	"engines": {
+		"vscode": "^1.5.x"
+	},
+	"categories": [
+		"Other"
+	],
+	"galleryBanner": {
+		"color": "#5c2d91",
+		"theme": "dark"
+	},
+	"icon": "images/icon.png",
+	"homepage": "https://github.com/remcoros/vscode-startanyshell",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/remcoros/vscode-startanyshell.git"
+	},
+	"bugs": {
+		"url": "https://github.com/remcoros/vscode-startanyshell/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"activationEvents": [
+		"onCommand:startanyshell.startShell"
+	],
+	"keywords": [
+		"cmd",
+		"shell",
+		"powershell",
+		"command prompt"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "startanyshell.startShell",
+				"title": "Start any shell"
+			}
+		],
+		"keybindings": [
+			{
+				"key": "ctrl+shift+c",
+				"command": "startanyshell.startShell"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "StartAnyShell configuration",
+			"properties": {
+				"startanyshell.openworkspaceroot": {
+					"description": "Always start at the currently opened workspace folder.",
+					"type": "boolean",
+					"default": true
+				},
+				"startanyshell.shells": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"command": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"description",
+							"command"
+						]
+					},
+					"default": [
+						{
+							"description": "Windows Command Prompt",
+							"command": "start \"%description%\" /WAIT %comspec%"
+						},
+						{
+							"description": "Git Bash 2",
+							"command": "\"C:\\Program Files\\Git\\git-bash.exe\" \"--cd=%path%\""
+						},
+						{
+							"description": "Windows Powershell",
+							"command": "start \"%description%\" powershell.exe -noexit"
+						},
+						{
+							"description": "Developer Command Prompt for VS2015",
+							"command": "start \"%description%\" /WAIT \"%HOMEDRIVE%\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat\""
+						},
+						{
+							"description": "Cmder",
+							"command": "cmder.exe /start \"%path%\""
+						}
+					],
+					"description": "Shell commands, see default for examples. The variable %path% will be replaced with the current working directory or file path."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"pkgvars": "node ./node_modules/vscode/bin/install",
+		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+	},
+	"devDependencies": {
+		"typescript": "^1.7.3",
+		"vscode": "^0.11.18"
+	},
+	"__metadata": {
+		"id": "b3d03957-2620-41ee-9854-88b0af1ee988",
+		"publisherId": "7f4b7809-c3d4-45fe-b051-c14e60f47a10",
+		"publisherDisplayName": "Remco Ros"
+	}
+}
